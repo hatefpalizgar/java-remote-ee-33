@@ -12,6 +12,8 @@ public class Main {
         showLove(girl); // showing love to a girl
         showLove(kittie); // showing love to a cat
 
+        Human h = new Girl("White"); // every child is ALSO a parent
+        // Girl g = new Human("White"); // incorrect: a parent is NOT a child
 
         // Possible statements (thanks to polymorphism)
         Girl julie = new Girl("Brunette");
