@@ -11,7 +11,7 @@ public class Main {
       1. Extend the Thread class and override its run() method
       2. Implement the Runnable interface and pass it to a Thread object in the constructor
     */
-    public static void main(String[] args) throws InterruptedException {
+    public static void main1(String[] args) throws InterruptedException {
         System.out.println(Thread.currentThread().getName()); // main thread
 
         // 1. Extend the Thread class and override its run() method
@@ -53,5 +53,99 @@ public class Main {
         // stop run method execution)
         // Refer to volatiles package
 
+        /* ========================================================================= */
+        //                States for Threads (running, waiting, dead)
+        /* ========================================================================= */
+
+        // The five states are as follows:
+        // New: A thread is in this state when it has been created, but the start() method has not yet
+        // been called on it
+        // Runnable: A thread is in this state when it is eligible to run, but the Java runtime has not
+        // yet selected it to run. This is also known as the "ready" state
+        // Running: A thread is in this state when it is currently executing its run() method
+        // Blocked (Non-runnable state): A thread is in this state when it is waiting for a resource that
+        // is currently held by another thread
+        // Dead or Terminated: A thread is in this state when it has completed execution of its run()
+        // method or when it has been stopped
+
     }
-}
+
+    /* ========================================================================= */
+    //                              Synchronization
+    /* ========================================================================= */
+        /*
+         1. What is synchronization?
+          Synchronization is a mechanism that allows multiple threads to access shared resources in a controlled manner,
+          preventing race conditions and data corruption.
+
+          2. Why is synchronization important? Without synchronization, it is possible for multiple
+          threads to access a shared resource simultaneously, which can lead to race conditions and data corruption.
+          Synchronization ensures that only one thread can access a shared resource at a time, preventing these issues.
+        */
+
+
+    public static void main(String[] args) throws InterruptedException {
+        Counter counter = new Counter();
+        Thread t1 = new IncrementThread(counter);
+        Thread t2 = new IncrementThread(counter);
+
+        t1.start();
+        t2.start();
+
+        t1.join(); // main thread should wait for t1 to terminate
+        t2.join(); // main thread should wait for t2 to terminate
+
+        System.out.println(counter.getCount()); // 2000
+    }
+
+
+    static class Counter { // SHARED RESOURCE
+        private int count = 0;
+        private Object lock = new Object();
+
+        // when a thread enters a synchronized method, it acquires the lock for the object
+        // on which the method is defined (counter object)
+        // This means that other thread cannot enter any synchronized method on the same object
+        // until the first thread has exited the method (released the lock)
+        // if we don't use synchronized keyword, it causes RACE CONDITION to happen.
+        // RACE CONDITION: when two or more threads try to access shared resources concurrently,
+        // and the outcome of the program depends on the interleaving of the threads
+        public synchronized void increment() {
+            count++;
+        }
+
+        // getCount() method can be accessed by multiple threads simultaneously
+        // because it's not synchronized
+        public int getCount() {
+            return count;
+        }
+
+        // Sometimes, you don't want to synchronize the whole method;
+        // instead you can synchronize a specific part of that method using blocks
+        public void doSomething() {
+            synchronized (lock){
+
+            }
+            // other stuff in the method
+        }
+
+    } // Counter class
+
+
+    static class IncrementThread extends Thread {
+        private Counter counter;
+
+        public IncrementThread(Counter counter) {
+            this.counter = counter;
+        }
+
+        @Override
+        public void run() {
+            for (int i = 0; i < 1000; i++) {
+                counter.increment();
+            }
+        }
+    } // IncrementThread class
+
+
+}// Main class
