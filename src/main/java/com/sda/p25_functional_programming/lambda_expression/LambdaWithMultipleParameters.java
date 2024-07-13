@@ -1,5 +1,7 @@
 package com.sda.p25_functional_programming.lambda_expression;
 
+import com.sda.p25_functional_programming.builtin_jdk_func_interfaces.PredicateExample;
+
 public class LambdaWithMultipleParameters {
     public static void main(String[] args) {
 
@@ -14,6 +16,11 @@ public class LambdaWithMultipleParameters {
 
 
         System.out.println(s.concat("Hello ", "World"));
+
+        /**
+         * Next:
+         * @see PredicateExample
+         * */
 
     }
 }
