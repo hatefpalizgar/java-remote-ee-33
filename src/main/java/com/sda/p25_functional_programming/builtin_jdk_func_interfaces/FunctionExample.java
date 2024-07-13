@@ -1,5 +1,7 @@
 package com.sda.p25_functional_programming.builtin_jdk_func_interfaces;
 
+import com.sda.p25_functional_programming.method_references.Example01;
+
 import java.util.function.Function;
 
 /*
@@ -23,6 +25,11 @@ public class FunctionExample {
 
         System.out.println(count); // 11
 
+        /**
+         * Next: Method References
+         *
+         * @see Example01
+         * */
 
     }
 }
