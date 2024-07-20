@@ -5,12 +5,17 @@
   <groupId>com.sda</groupId>
   <artifactId>lecture</artifactId>
   <version>1.0</version>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
 
   <name>lecture</name>
   <url>http://maven.apache.org</url>
+    <modules>
+        <module>RepositoryModule</module>
+        <module>ServiceModule</module>
+        <module>UiModule</module>
+    </modules>
 
-  <properties>
+    <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 

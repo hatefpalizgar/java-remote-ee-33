@@ -1,0 +1,3 @@
+module UiModule {
+    requires ServiceModule;
+}
